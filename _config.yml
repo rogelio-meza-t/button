@@ -1,0 +1,19 @@
+safe: 				true
+lsi: 				false
+pygments: 			true
+source: 			_src
+baseurl:			/button
+plugins:          	_src/_plugins
+
+icon_meta:        	_src/icons.yml
+icon_layout:      	icon.html    # Relative to _layouts directory
+icon_destination: 	icon         # Relative to destination
+permalink:        pretty
+destination:      _gh_pages
+
+bootstrap:
+  version:        3.0.0
+  url:            http://getbootstrap.com
+
+jquery:
+  version:        1.10.2
