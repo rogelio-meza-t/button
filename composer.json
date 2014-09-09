@@ -1,0 +1,13 @@
+{
+    "name": "button/button",
+    "description": "Fast and lightweight router for PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rogelio Meza",
+            "email": "rogelio.meza.t@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
