@@ -1,6 +1,7 @@
 {
     "name": "button/button",
     "description": "Fast and lightweight router for PHP",
+    "keywords": ["routing", "router", "URL", "URI", "JSON", "request", "response"],
     "license": "MIT",
     "authors": [
         {
