@@ -84,14 +84,14 @@ The values are extracted from the URI and are passed as arguments to the functio
 The optional parameters are defined within parentheses. If you use one or more optional parameters you can declare the parameter in the function with a value by default or not.
 ```php
 $btn = new Button();
-$btn->hook('GET', '/say/hello(/:name(/:surname))', function($name='John', $surname='Doe'){
+$btn->hook('GET', '/hello(/:name(/:surname))', function($name='John', $surname='Doe'){
   return "Hello ". $name . " " . $surname ;
 });
 ```
 This route can accepts requests for:
 ```
-/say/hello
-/say/hello/Jane
-/say/hello/Jane/Roe
+/hello
+/hello/Jane
+/hello/Jane/Roe
 ```
 ### Callbacks
