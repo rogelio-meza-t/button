@@ -10,7 +10,7 @@ $btn->hook('GET', '/say/hello/:name', function($name){
 ```
 In the previous example, when you access to `/say/hello/john`, Button will run the anonymous function and will return the next JSON object:
 
-```
+```json
 [
     'Hello john!'
 ]
@@ -25,12 +25,34 @@ In the previous example, when you access to `/say/hello/john`, Button will run t
     	1. [Simple routing](#simple-routing)
     	2. [Routing parameters](#routing-parameters)
     	3. [Optional parameters](#optional-parameters)
-    2. Callbacks
+    2. [Callbacks](#callbacks)
     
 ## Requirements
 Button requires PHP 5.4+ to run
 
 ## Installation
+There are a few ways to install Button in your project.
+
+#### Composer install
+Create a `composer.json` file in your project root directory
+```json
+{
+    "require": {
+        "button/button": "dev-master"
+    }
+}
+```
+and make the command `composer install`. Make sure to have installed [composer](https://getcomposer.org)
+
+#### Clone repository
+If you don't use composer, you can clone the repository by doing
+```
+cd to-your-project-lib-directory
+git clone https://github.com/rogelio-meza-t/button.git button
+```
+
+#### Download a copy
+Download a copy of [Button.php](../master/button.php) to your project.
 
 ## Usage
 
@@ -95,3 +117,79 @@ This route can accepts requests for:
 /hello/Jane/Roe
 ```
 ### Callbacks
+Callbacks are the way to run code when you define a route. You can invoke one or more functions and get multiple JSON responses at the same time.
+
+#### Anonymous functions
+The basic way is define the `$callback` parameter as an anonymous function.
+```php
+$btn = new Button();
+$btn->hook('GET', '/foo/bar', function(){
+  return "Hello World!";
+});
+```
+Even if you have defined an object, you can use it inside the anonymous function using a closure.
+```php
+$btn = new Button();
+$foo = new FooClass();
+$btn->hook('GET', '/foo/bar/:param', function($param) use ($foo){
+  return $foo->someMethod($param);
+});
+```
+Of course, you can store the anonymous function in a variable and use this later as the `$callback` parameter.
+```php
+$callback_function = function($param){
+    //some code ...
+    return $param;
+};
+$btn = new Button();
+$btn->hook('GET', '/foo/bar/:param', $callback_function);
+```
+
+#### Normal functions
+This doesn't need much explanations.
+```php
+function callback_function($param){
+    //some code ...
+    return $param;
+}
+$btn = new Button();
+$btn->hook('GET', '/foo/bar/:param', 'callback_function');
+```
+Or you can invoke a static method from some class:
+```php
+class SomeClass{
+    function callback_function($param){
+        //some code ...
+        return $param;
+    }
+}
+$btn = new Button();
+$btn->hook('GET', '/foo/bar/:param', 'SomeClass::callback_function');
+```
+
+#### Array of functions
+When you need to get more than one response, you can pass an array of functions to the `$callback` parameter. The result is a JSON array the same size as the `$callback` array.
+
+```php
+function a($param){
+  //some code ...
+  $return array("name" => $param);
+}
+function b($param){
+  //some code ...
+  $return array("user" => $param);
+}
+
+$btn = new Button();
+$btn->hook('GET', '/foo/bar/:param', ['a', 'b']);
+```
+The previous example return the next JSON object
+
+```json
+[
+    {"name" : "rogelio"},
+    {"user" : "rogelio"}
+]
+```
+
+**Hint**: You can mix anonymous functions, normal functions or static methods inside the array.
