@@ -5,19 +5,22 @@ A fast and lightweight PHP 5.4+ nano router. Build API's and RESTful application
 ```php
 $btn = new Button();
 $btn->hook('GET', '/say/hello/:name', function($name){
-	return "Hello ". $name ."!";
+	return array("greeting" => "Hello ". $name ."!");
 });
 ```
 In the previous example, when you access to `/say/hello/john`, Button will run the anonymous function and will return the next JSON object:
 
 ```json
 [
-    'Hello john!'
+    {"greeting" : "Hello john!"}
 ]
 ```
 
 1. [Requirements](#requirements) 
-2. Installation
+2. [Installation](#instalation)
+    1. [Composer install](#composer-install)
+    2. [Clone Repo](#clone-repository)
+    3. [Download Copy](#download-a-copy)
 3. [Usage](#usage)
     1. [Parameters](#parameters)
 4. [Features](#features)
@@ -26,6 +29,9 @@ In the previous example, when you access to `/say/hello/john`, Button will run t
     	2. [Routing parameters](#routing-parameters)
     	3. [Optional parameters](#optional-parameters)
     2. [Callbacks](#callbacks)
+      1. [Anonymous functions](#anonymous-functions)
+      2. [Normal functions](#normal-functions)
+      3. [Array of functions](#array-of-functions)
     
 ## Requirements
 Button requires PHP 5.4+ to run
@@ -158,7 +164,7 @@ $btn->hook('GET', '/foo/bar/:param', 'callback_function');
 Or you can invoke a static method from some class:
 ```php
 class SomeClass{
-    function callback_function($param){
+    public static function callback_function($param){
         //some code ...
         return $param;
     }
@@ -183,7 +189,7 @@ function b($param){
 $btn = new Button();
 $btn->hook('GET', '/foo/bar/:param', ['a', 'b']);
 ```
-The previous example return the next JSON object
+The previous example returns the next JSON object
 
 ```json
 [
